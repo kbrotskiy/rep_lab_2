@@ -13,80 +13,75 @@
  
 class Vector_1
 {
+    int k;
     double *pv;
-    int n;
 public:
+    const double & operator[] (int index) const
+        {
+            return pv[index];
+        }
+    
     Vector_1()
         {
             pv = 0;
-            n = 0;
+            k = 0;
         }
  
     Vector_1(double *ws, int n)
         {
-            this->n = n;
+            this->k = n;
             this->pv = new double[n];
         for (int i = 0; i<n; i++)
             this->pv[i] = ws[i];
-    }
+        }
+    
+    Vector_1 & operator =(Vector_1& vec_2)
+        {
+            k = vec_2.k;
+            pv = new double[k];
+            for (int i = 0; i<k; i++) pv[i] = vec_2.pv[i];
+                return *this;
+        }
  
-     const double & operator[] (int index) const
-    {
-        return pv[index];
-    }
+    void print()
+        {
+            printf("\n");
+            for (int i = 0; i<k; i++)
+                printf(" %.2lf ", pv[i]);
+        }
  
-    Vector_1 & operator =(Vector_1& vec_2) // Оператор-функция копирования объекта
-    {
-        n = vec_2.n;
-        pv = new double[n];
-        for (int i = 0; i<n; i++) pv[i] = vec_2.pv[i];
-        return *this;
-    }
- 
-    void print() // Печать вектора (массива)
-    {
-        printf("\n");
-        for (int i = 0; i<n; i++)
-            printf(" %.2lf ", pv[i]);
-    }
- 
-    ~Vector_1() // Деструктор
-    {
-        if (n>0) delete[] pv; // Освобождаем память
-    }
- 
-    friend double *operator +(Vector_1& V1,   double *v2); // Дружественная функция, определенная вне класса. функция результата
+    ~Vector_1()
+        {
+            if (k>0) delete[] pv;
+        }
+    friend double *operator +(Vector_1& V1,   double *v2);
 };
  
 double *operator +(Vector_1& V1,   double *v2)
-{
-    double *p = new double[V1.n];
-    for (int i = 0; i<V1.n; i++)
-        p[i] = V1.pv[i] + v2[i];
-    return p;
-}
+    {
+        double *p = new double[V1.k];
+        for (int i = 0; i<V1.k; i++)
+            p[i] = V1.pv[i] + v2[i];
+        return p;
+    }
  
-int main()
-{
+int main() {
     setlocale(LC_ALL, "rus");
-    double w1[] = { 1.4, 3.2, 4.7, 6.5, 8 };
-    Vector_1 V1(w1, 5); // Создаем объект
-    double w2[] = { 9, 3.1, 5, 6.6, 14.7 };
-    Vector_1 V2(w2, 5);
-    printf("\n");
-    V1.pr; // Печать объекта
-    V2.pr; // Печать объекта
-    printf("\n");
+    double w1[] = { 1.4, 3.2, 4.7, 6.5, 8, 20 };
+    Vector_1 V1(w1, 6); // Создаем объект
+    double w2[] = { 9, 3.1, 5, 6.6, 14.7, 18 };
+    Vector_1 V2(w2, 6);
+    V1.pr;
+    V2.pr;
     printf("\nПерегрузка операции []...\n");
-    for (int i = 0; i<5; i++)
-        printf(" %.2f ", V1[i]); // Пример обращения к операции []
+    for (int i = 0; i<6; i++)
+        printf(" %.2f ", V1[i]);
     double *w3;
     printf("\n\nПерегрузка операции: +");
-    w3 = V1 + w2; // Пример выполнения перегруженной операции +   ,  =
-    //w3=operator +(V1, w2);                // второй способ сложения векторов, через оператор-функцию
-    Vector_1 V3(w3, 5);
+    w3 = V1 + w2;
+    Vector_1 V3(w3, 6);
     printf("\nCуммированный вектор: ");
-    V3.pr; // Печать полученного объекта
+    V3.pr;
     printf("\n");
     return 0;
 }

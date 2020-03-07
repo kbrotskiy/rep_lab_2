@@ -10,7 +10,7 @@ int main(){
     Vector vector1;
     Vector vector2;
     string str;
-    ifstream fin("/Users/kirillbrockij/Library/Mobile Documents/com~apple~CloudDocs/Xcode/БАМОНКА/2 semestr/Lab_2/Lab_2/input.txt");
+    ifstream fin("input.txt");
     double *w1=new double[5];
     if (fin.is_open()) {
         fin >> vector1;

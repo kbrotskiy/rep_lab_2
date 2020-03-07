@@ -8,14 +8,15 @@ class Vector // Класс- вектор
 	int *p;
 	int n;
 public:
-	Vector(int *p, int n);
+	Vector(double *ws, int n);
 	Vector();
-	Vector(const Vector & vector);
-	Vector(Vector && vector);
+	Vector(const Vector & V);
+	Vector(Vector&& V);
 	~Vector();
-	Vector & operator=(const Vector& vector);
-	Vector & operator=(Vector&& vector);
-	Vector & operator^(const Vector & vector);
-	friend istream & operator>> (istream& in, Vector & vector);
-	friend ostream & operator<< (ostream& out, Vector & vector);
+        double & operator[](int index);
+	Vector & operator=(Vector& vec2);
+	friend double *operator +(Vector& V1,   double *v2);
+        friend istream& operator>>(istream& in, Vector& vector);
+	friend ofstream& operator<<(ofstream& out, Vector& vector);
+	double *operator +(Vector& V1,   double *v2);
 };

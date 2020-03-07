@@ -126,6 +126,7 @@ void output(){
     V3.pr;
     file.close();
 }
+
 int main() {
     setlocale(LC_ALL, "rus");
     input();

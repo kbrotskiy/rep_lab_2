@@ -50,6 +50,7 @@ public:
         return *this;
     }
     friend double *operator +(Vector& V1,   double *v2);
+    friend istream& operator>>(istream& in, Vector& vector);
 };
 
 double *operator +(Vector& V1,   double *v2)
@@ -60,19 +61,36 @@ double *operator +(Vector& V1,   double *v2)
     return p;
 }
 
+istream& operator>>(istream& in, Vector& vector) {
+    vector.pv=new double[5];
+    vector.k = 5;
+    for (int i = 0; i<5; i++) {
+        in >> vector[i];
+    }
+    return in;
+}
+
+ofstream& operator<<(ofstream& out, Vector& vector) {
+    for (int i = 0; i<5; i++) {
+        out << vector[i];
+    }
+    return out;
+}
 
 int main(){
 //    int n;
+    Vector vector1;
+    Vector vector2;
     string str;
     ifstream fin("/Users/kirillbrockij/Library/Mobile Documents/com~apple~CloudDocs/Xcode/БАМОНКА/2 semestr/Lab_2/Lab_2/input.txt");
     double *w1=new double[5];
-    for (int i=0;i<5;i++){
-        fin>>w1[i];
+    if (fin.is_open()) {
+        fin >> vector1;
     }
     double *w2=new double[5];
     getline(fin, str);
-    for (int i=0;i<5;i++){
-        fin>>w2[i];
+    if (fin.is_open()) {
+        fin >> vector2;
     }
     fin.close();
     Vector V1(w1, 5); // Создаем объект
@@ -80,10 +98,10 @@ int main(){
     double *w3;
     w3 = V1 + w2;
     Vector V3(w3, 5);
-    
+
     ofstream fout("Output.txt");
     for (int i=0;i<5;i++){
-        fout << V3[i] << " ";
+        fout << V3 << " ";
     }
     fout <<endl;
     fout.close();
